@@ -1,0 +1,33 @@
+.site-layout-background {
+  background: #fff;
+}
+.main-layout {
+  .ant-layout-sider {
+    background: #FFF0F0;
+    .ant-layout-sider-trigger {
+      background: #FFF0F0;
+      color: #333333;
+      padding: 24px 0;
+      line-height: unset;
+      height: unset;
+    }
+    .ant-menu {
+      background: #FFF0F0;
+      color: #333333;
+      .ant-menu-item-selected {
+        background: #CF7B7B;
+        color: #fff;
+      }
+      .ant-menu-item-active {
+        color: #F7DA95;
+        font-weight: bold;
+      }
+      .ant-menu-submenu-active {
+        color: #F7DA95 !important;
+      }
+      .ant-menu-item:after {
+        border-right: 11px solid #F7DA95;
+      }
+    }
+  }
+}

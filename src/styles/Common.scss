@@ -1,0 +1,14 @@
+.btn-custom {
+  background: #CF7B7B;
+  border-color: #CF7B7B;
+  &:focus {
+    background: #FFF0F0;
+    border-color: #FFF0F0;
+    color: #CF7B7B;
+  }
+  &:hover {
+    background: #FFF0F0;
+    border-color: #FFF0F0;
+    color: #CF7B7B;
+  }
+}
