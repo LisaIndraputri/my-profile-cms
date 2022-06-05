@@ -38,7 +38,6 @@ import Table from '@ckeditor/ckeditor5-table/src/table.js';
 import TableCaption from '@ckeditor/ckeditor5-table/src/tablecaption.js';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
-import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
 import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount.js';
 
@@ -81,13 +80,39 @@ Editor.builtinPlugins = [
 	TableCaption,
 	TableToolbar,
 	TextTransformation,
-	TodoList,
 	Underline,
 	WordCount
 ];
 
 // Editor configuration.
 Editor.defaultConfig = {
+	fontSize: {
+		options: [
+				9,
+				11,
+				13,
+				'default',
+				17,
+				19,
+				21,
+				50
+		]
+	},
+	fontFamily: {
+		options: [
+			'default',
+			'Courier New, Courier, monospace',
+			'Georgia, serif',
+			'Lucida Sans Unicode, Lucida Grande, sans-serif',
+			'Tahoma, Geneva, sans-serif',
+			'Times New Roman, Times, serif',
+			'Trebuchet MS, Helvetica, sans-serif',
+			'Verdana, Geneva, sans-serif',
+			'Roboto, sans-serif',
+			'Abhaya Libre, serif'
+		],
+		supportAllValues: true
+	},
 	toolbar: {
 		items: [
 			'heading',
@@ -101,7 +126,6 @@ Editor.defaultConfig = {
 			'link',
 			'bulletedList',
 			'numberedList',
-			'todoList',
 			'|',
 			'fontFamily',
 			'fontSize',
