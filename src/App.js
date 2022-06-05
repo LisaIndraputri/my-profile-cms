@@ -13,6 +13,8 @@ const ProjectList = React.lazy(() => import('./pages/ProjectList'))
 
 const Sidebar = React.lazy(() => import('./components/header/Sidebar'))
 
+console.log(window.location.pathname)
+
 function App() {
   return (
     <>
@@ -24,7 +26,9 @@ function App() {
             }}
             className="main-layout"
           >
-            <Sidebar />
+            {
+              window.location.pathname !== '/login' ? <Sidebar /> : ''
+            }
             <Layout className="site-layout">
               <Content className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                 <Routes>
