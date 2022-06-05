@@ -5,7 +5,7 @@ import '../styles/Login.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, reset } from '../features/auth/authSlice';
 import Spinner from '../components/common/Spinner';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -45,6 +45,7 @@ function Login() {
   }
   return (
     <div className='login-wrapper'>
+      <ToastContainer />
       <Form
         name="basic"
         labelCol={{ span: 8 }}

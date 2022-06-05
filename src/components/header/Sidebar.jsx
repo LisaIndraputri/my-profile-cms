@@ -1,7 +1,10 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import {useNavigate} from 'react-router-dom';
-import { HomeOutlined, ProjectOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { HomeOutlined, ProjectOutlined, UnorderedListOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Layout, Menu, Image, Divider } from 'antd';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { logout, reset } from '../../features/auth/authSlice';
 
 const { Sider } = Layout;
 
@@ -26,10 +29,16 @@ function Sidebar() {
   useEffect(() => {
     
   })
-  const user = JSON.parse(localStorage.getItem('user'))
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {user} = useSelector((state) => state.auth)
   const handleMenuClicked = useCallback((e) => navigate(e.key, {replace: false}), [navigate]);
+  const handleLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate('/login')
+  }
   if (user && user.name) {
     return (
       <Sider
@@ -50,6 +59,13 @@ function Sidebar() {
           mode="inline" 
           items={items} 
           onClick={handleMenuClicked}
+        />
+        <Menu 
+          mode="inline" 
+          items={[
+            { label: 'Logout', key: 'logout', icon: <LogoutOutlined /> },
+          ]}
+          onClick={handleLogout}
         />
         <Divider />
       </Sider>

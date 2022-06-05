@@ -4,6 +4,8 @@ import { Layout } from 'antd';
 import Spinner from './components/common/Spinner';
 import './styles/App.scss'
 
+import 'react-toastify/dist/ReactToastify.css';
+
 const { Content, Footer } = Layout;
 
 const Home = React.lazy(() => import('./pages/Home'))
@@ -12,8 +14,8 @@ const ProjectCategory = React.lazy(() => import('./pages/ProjectCategory'))
 const ProjectList = React.lazy(() => import('./pages/ProjectList'))
 
 const Sidebar = React.lazy(() => import('./components/header/Sidebar'))
+const PrivateRoute = React.lazy(() => import('./components/PrivateRoute'))
 
-console.log(window.location.pathname)
 
 function App() {
   return (
@@ -32,10 +34,16 @@ function App() {
             <Layout className="site-layout">
               <Content className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                 <Routes>
-                  <Route exact path='/' element={<Home />}/>
                   <Route exact path='/login' element={<Login />}/>
-                  <Route exact path='/project-category' element={<ProjectCategory />}/>
-                  <Route exact path='/project-list' element={<ProjectList />}/>
+                  <Route exact path='/' element={<PrivateRoute />}>
+                    <Route exact path='/' element={<Home />}/>
+                  </Route>
+                  <Route exact path='/project-category' element={<PrivateRoute />}>
+                    <Route exact path='/project-category' element={<ProjectCategory />}/>
+                  </Route>
+                  <Route exact path='/project-list' element={<PrivateRoute />}>
+                    <Route exact path='/project-list' element={<ProjectList />}/>
+                  </Route>
                 </Routes>
               </Content>
               <Footer
