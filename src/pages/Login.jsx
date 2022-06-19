@@ -22,14 +22,14 @@ function Login() {
     }
 
     if (isSuccess || user) {
-      navigate('/')
+      toast.success('Success!')
+      navigate('/', { replace: true })
     }
 
     dispatch(reset())
   }, [isError, isSuccess, user, message, navigate, dispatch])
 
   const onFinish = (values) => {
-    console.log('Success:', values);
     dispatch(login({
       email: values.username,
       password: values.password
