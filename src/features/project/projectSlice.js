@@ -46,7 +46,6 @@ export const projectSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(projectCategoryQuery.fulfilled, (state, action) => {
-      console.log(action, 'a')
       if (action.payload.success) {
         state.isSuccess = true
         state.projectCategory = action.payload.data

@@ -116,7 +116,6 @@ function ProjectCategory() {
       const newData = arrayMoveImmutable(datas.slice(), oldIndex, newIndex).filter(
         (el) => !!el,
       );
-      console.log('Sorted items: ', newData);
       setDatas(newData);
     }
   };

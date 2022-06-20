@@ -27,7 +27,6 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk(
   'auth/logout',
   async (user, thunkAPI) => {
-    console.log('lg')
     await authService.logout()
   }
 )
@@ -62,7 +61,6 @@ export const authSlice = createSlice({
       
     })
     .addCase(login.rejected, (state, action) => {
-      console.log('a')
       state.isLoading = false
       state.isError = true
       state.message = action.payload.errorMsg

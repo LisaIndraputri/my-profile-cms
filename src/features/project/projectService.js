@@ -13,8 +13,6 @@ const projectCategoryQuery = async () => {
     }
   })
 
-  console.log(response)
-
   return response.data
 }
 
