@@ -3,6 +3,7 @@ import { Table, Card } from 'antd';
 import { useSelector } from 'react-redux';
 import axios from "axios"
 import { toast } from 'react-toastify';
+import moment from 'moment'
 
 function Home() {
   useEffect(() => {
@@ -29,6 +30,12 @@ function Home() {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
+    },
+    {
+      title: 'Created At',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (text) => <div>{moment(text).format('DD MM YYYY - HH:mm')}</div>,
     }
   ];
   const fetchList = async () => {
