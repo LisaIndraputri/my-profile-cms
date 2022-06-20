@@ -1,0 +1,14 @@
+.project-category {
+  .btn-section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 24px;
+    .btn {
+      min-width: 124px;
+    }
+  }
+  .table-section {
+    margin-bottom: 24px;
+  }
+}
