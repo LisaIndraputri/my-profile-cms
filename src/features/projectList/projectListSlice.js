@@ -1,29 +1,29 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import projectService from "./projectService";
+import projectService from "./projectListService";
 
 const initialState = {
-  projectCategory: [],
+  projectList: [],
   isSuccess: false,
   isError: false,
   message: ''
 }
 
-export const projectCategoryQuery = createAsyncThunk(
-  'project/projectCategoryQuery',
-  async (datas, thunkAPI) => {
+export const projectQuery = createAsyncThunk(
+  'projectList/projectQuery',
+  async (thunkAPI) => {
     try {
-      return await projectService.projectCategoryQuery(datas)
+      return await projectService.projectQuery()
     } catch (error) {
       const message = error.message || error.toString()
       return thunkAPI.rejectWithValue(message)
     }
   }
 )
-export const setProjectCategory = createAsyncThunk(
-  'project/set',
+export const setProject = createAsyncThunk(
+  'projectList/set',
   async (datas, thunkAPI) => {
     try {
-      return await projectService.setProjectCategory(datas)
+      return await projectService.setProject(datas)
     } catch (error) {
       const message = error.message || error.toString()
       return thunkAPI.rejectWithValue(message)
@@ -31,13 +31,12 @@ export const setProjectCategory = createAsyncThunk(
   }
 )
 
-
-export const projectSlice = createSlice({
-  name: 'project',
+export const projectListSlice = createSlice({
+  name: 'projectList',
   initialState,
   reducers: {
     reset: (state) => {
-      state.projectCategory = []
+      state.projectList = []
       state.isSuccess = false
       state.isError = false
       state.message = ''
@@ -45,28 +44,28 @@ export const projectSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(projectCategoryQuery.fulfilled, (state, action) => {
+    .addCase(projectQuery.fulfilled, (state, action) => {
       if (action.payload.success) {
         state.isSuccess = true
-        state.projectCategory = action.payload.data
+        state.projectList = action.payload.data
       } else {
         state.isError = true
         state.message = action.payload.errorMsg
-        state.projectCategory = []
+        state.projectList = []
       }
       
     })
-    .addCase(projectCategoryQuery.rejected, (state, action) => {
+    .addCase(projectQuery.rejected, (state, action) => {
       state.isLoading = false
       state.isError = true
       state.message = action.payload.errorMsg
-      state.projectCategory = null
+      state.projectList = null
     })
-    .addCase(setProjectCategory.fulfilled, (state, action) => {
-      state.projectCategory = action.payload
+    .addCase(setProject.fulfilled, (state, action) => {
+      state.projectList = action.payload
     })
   }
 })
 
-export const {reset} = projectSlice.actions
-export default projectSlice.reducer
+export const {reset} = projectListSlice.actions
+export default projectListSlice.reducer

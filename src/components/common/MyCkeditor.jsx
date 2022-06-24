@@ -15,7 +15,6 @@ function MyCkeditor(props) {
         }}
         onChange={(event, editor) => {
           const data = editor.getData()
-          console.log({event, data})
           setDataEdit(data)
         }}
       />

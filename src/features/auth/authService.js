@@ -1,13 +1,15 @@
-import axios from "axios"
+import {
+  request
+} from '../../utils/request'
 
-const API_URL_LOGIN = `${process.env.REACT_APP_BASE_URL}/api/users/login`
+import {
+  API_URL_LOGIN
+} from '../../constants/apis'
 
 const login = async (userData) => {
-  const response = await axios.post(API_URL_LOGIN, userData)
+  const response = await request(API_URL_LOGIN, userData, 'POST')
 
-  console.log(response)
-
-  if(response.data && response.data.success) {
+  if(response.success) {
     localStorage.setItem('user', JSON.stringify(response.data))
   }
   return response.data
