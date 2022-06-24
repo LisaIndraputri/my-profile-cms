@@ -1,19 +1,12 @@
-import axios from "axios"
-
-const API_URL_PROJECT_QUERY = `${process.env.REACT_APP_BASE_URL}/api/project-category/query`
-
-// Get user from localStorage
-const user = JSON.parse(localStorage.getItem('user'))
+import { request } from '../../utils/request'
+import {
+  API_URL_PROJECT_QUERY
+} from '../../constants/apis'
 
 const projectCategoryQuery = async () => {
-  const response = await axios.get(API_URL_PROJECT_QUERY, {
-    headers: {
-      'Authorization': `Bearer ${user && user.token}`,
-      'Content-Type': 'application/json',
-    }
-  })
+  const response = await request(API_URL_PROJECT_QUERY)
 
-  return response.data
+  return response
 }
 
 const setProjectCategory = async (datas) => {

@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import { Table, Card } from 'antd';
-import { useSelector } from 'react-redux';
-import axios from "axios"
+import { request } from '../utils/request'
 import { toast } from 'react-toastify';
 import moment from 'moment'
+import {
+  API_GET_REFERENCE
+} from '../constants/apis'
 
 function Home() {
   useEffect(() => {
@@ -11,7 +13,6 @@ function Home() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
-  const {user} = useSelector(state => state.auth)
   const [datas, setDatas] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const columns = [
@@ -40,18 +41,12 @@ function Home() {
   ];
   const fetchList = async () => {
     setIsLoading(true)
-    const API_GET_REFERENCE = `${process.env.REACT_APP_BASE_URL}/api/references/query`
-    const response = await axios.get(API_GET_REFERENCE, {
-      headers: {
-        'Authorization': `Bearer ${user && user.token}`,
-        'Content-Type': 'application/json',
-      }
-    })
-    if (response.data && response.data.success) {
-      response.data.data.map(item => {
+    const response = await request(API_GET_REFERENCE)
+    if (response.success) {
+      response.data.map(item => {
         return item.key = item._id
       })
-      setDatas(response.data.data)
+      setDatas(response.data)
     } else {
       toast.error('Failed to Fetch!')
     }

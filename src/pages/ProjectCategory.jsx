@@ -8,13 +8,15 @@ import { toast } from 'react-toastify';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import '../styles/Common.scss';
 import '../styles/Project.scss';
-import axios from 'axios';
+import {request} from '../utils/request'
 import ModalAddProjectCategory from '../components/modal/ModalAddProjectCategory';
 import { projectCategoryQuery } from '../features/project/projectSlice';
+import {
+  API_URL_UPDATE_SORT
+} from '../constants/apis'
 
 function ProjectCategory() {
   const {projectCategory, isSuccess, isError, message} = useSelector(state => state.project)
-  const {user} = useSelector(state => state.auth)
   const [datas, setDatas] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
@@ -44,16 +46,10 @@ function ProjectCategory() {
   }
   const updateSort = async () => {
     setIsLoading(true)
-    const API_URL_UPDATE_SORT = `${process.env.REACT_APP_BASE_URL}/api/project-category/updateSort`
-    const res = await axios.post(API_URL_UPDATE_SORT,{
+    const res = await request(API_URL_UPDATE_SORT,{
       list: datas
-    }, {
-      headers: {
-        'Authorization': `Bearer ${user && user.token}`,
-        'Content-Type': 'application/json',
-      }
-    })
-    if (res.data && res.data.success) {
+    }, 'POST')
+    if (res.success) {
       await dispatch(projectCategoryQuery())
     } else {
       toast.error('Failed to Update!')
@@ -91,6 +87,14 @@ function ProjectCategory() {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
+    },
+    {
+      title: 'Image',
+      key: 'image',
+      render: (_, record) => (
+        <div style={{backgroundImage: `url('${record.projectImg}')`, height: '65px', backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}>
+        </div>
+      ),
     },
     {
       title: 'Action',
