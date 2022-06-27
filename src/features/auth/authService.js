@@ -8,11 +8,10 @@ import {
 
 const login = async (userData) => {
   const response = await request(API_URL_LOGIN, userData, 'POST')
-
   if(response.success) {
-    localStorage.setItem('user', JSON.stringify(response.data))
+    localStorage.setItem('user', JSON.stringify(response))
   }
-  return response.data
+  return response
 }
 
 const logout = () => localStorage.removeItem('user')

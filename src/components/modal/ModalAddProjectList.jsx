@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { Button, Modal, Form, Input, Upload, message, Select, Radio } from 'antd';
@@ -20,7 +21,7 @@ function ModalAddProjectList({isEdit = false, data = {}}) {
   const {projectCategory} = useSelector(state => state.project)
   const [form] = Form.useForm();
   const [value, setValue] = useState(1);
-  const [desc, setDesc] = useState(1);
+  const [desc, setDesc] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingImg, setLoadingImg] = useState(false);
@@ -31,15 +32,17 @@ function ModalAddProjectList({isEdit = false, data = {}}) {
   const { Option } = Select;
 
   useEffect(()=> {
-    form.setFieldsValue({
-      name: data.name || '',
-      description: data.description || '',
-      category: data.category,
-      urlLink: data.urlLink
-    });
-    setImageUrl(data.projectImg || '')
-    setDesc(data.description || '')
-  }, [form, data])
+    if (isEdit && data !== {}) {
+      form.setFieldsValue({
+        name: data.name || '',
+        description: data.description || '',
+        category: data.category,
+        urlLink: data.urlLink
+      });
+      setImageUrl(data.projectImg || '')
+      setDesc(data.description || '')
+    }
+  }, [data])
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -48,6 +51,7 @@ function ModalAddProjectList({isEdit = false, data = {}}) {
   const handleOk = async () => {
     setIsLoading(true)
     const {name, category, background_image, urlLink} = form.getFieldsValue()
+    console.log(desc)
     const params = {
       name,
       description: desc,
@@ -190,17 +194,30 @@ function ModalAddProjectList({isEdit = false, data = {}}) {
               },
             ]}
           >
-            <CKEditor 
-              editor={ Editor }
-              data={desc}
-              onReady={editor => {
-                console.log('editor is ready to use', editor)
-              }}
-              onChange={(event, editor) => {
-                const data = editor.getData()
-                setDesc(data)
-              }}
-            />
+            {isEdit ? 
+              <CKEditor 
+                editor={ Editor }
+                data={desc}
+                onReady={editor => {
+                  console.log('editor is ready to use', editor)
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData()
+                  setDesc(data)
+                }}
+              /> : <CKEditor 
+                  editor={ Editor }
+                  onReady={editor => {
+                    console.log('editor is ready to use', editor)
+                  }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData()
+                    console.log('data', data)
+                    setDesc(data)
+                  }}
+                /> 
+
+            }
           </Form.Item>
           <Form.Item
             name="category"

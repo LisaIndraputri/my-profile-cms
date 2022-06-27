@@ -50,7 +50,7 @@ export const projectListSlice = createSlice({
         state.projectList = action.payload.data
       } else {
         state.isError = true
-        state.message = action.payload.errorMsg
+        state.message = action.payload && action.payload.errorMsg
         state.projectList = []
       }
       
@@ -58,7 +58,7 @@ export const projectListSlice = createSlice({
     .addCase(projectQuery.rejected, (state, action) => {
       state.isLoading = false
       state.isError = true
-      state.message = action.payload.errorMsg
+      state.message = action.payload && action.payload.errorMsg
       state.projectList = null
     })
     .addCase(setProject.fulfilled, (state, action) => {
